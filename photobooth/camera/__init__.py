@@ -34,7 +34,8 @@ modules = (
      'CameraGphoto2CommandLine'),
     ('opencv', 'CameraOpenCV', 'CameraOpenCV'),
     ('picamera', 'CameraPicamera', 'CameraPicamera'),
-    ('dummy', 'CameraDummy', 'CameraDummy'))
+    ('dummy', 'CameraDummy', 'CameraDummy')
+    ('external-Trigger', 'CameraExternalTriggerSDWifi','CameraExternalTriggerSDWifi'))
 
 
 class Camera:
