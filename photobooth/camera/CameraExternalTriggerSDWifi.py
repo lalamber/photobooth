@@ -17,12 +17,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import RPi.GPIO as GPIO
 import logging
 import subprocess
 import os
+import time
+import glob
+from shututil import copyfile
 
 from PIL import Image
 from .CameraInterface import CameraInterface
+
+
 
 
 class CameraExternalTriggerSDWifi(CameraInterface):
@@ -31,10 +37,10 @@ class CameraExternalTriggerSDWifi(CameraInterface):
 
         super().__init__()
 
-        self.hasPreview = True
+        self.hasPreview = False
         self.hasIdle = False
 
-        logging.info('Using gphoto2 via command line')
+        logging.info('Using External Trigger with WIFI SD Card')
 
         if os.access('/dev/shm', os.W_OK):
             logging.debug('Storing temp files to "/dev/shm/photobooth.jpg"')
@@ -43,20 +49,25 @@ class CameraExternalTriggerSDWifi(CameraInterface):
             logging.debug('Storing temp files to "/tmp/photobooth.jpg"')
             self._tmp_filename = '/tmp/photobooth.jpg'
 
-        logging.info('Using External Trigger with WIFI SD Card')
-
-
     def setActive(self):
-        self._callGphoto('-a', '/dev/null')
+        #self._callGphoto('-a', '/dev/null')
 
-    def getPreview(self):
+    #def getPreview(self):
 
-        return self.getPicture()
-        self._callGphoto('--capture-image-and-download', self._tmp_filename)
-        return Image.open(self._tmp_filename)
+    #    return self.getPicture()
+    #    self._callGphoto('--capture-image-and-download', self._tmp_filename)
+    #    return Image.open(self._tmp_filename)
 
     def getPicture(self):
 
-        cmd = 'gphoto2 --force-overwrite --quiet {} --filename {}'
-        return subprocess.check_output(cmd.format(action, filename),
-                                       shell=True, stderr=subprocess.STDOUT)
+        GPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(23, GPIO.OUT)
+        GPIO.output(23, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(23, GPIO.LOW)
+
+        return 0
+        #cmd = 'gphoto2 --force-overwrite --quiet {} --filename {}'
+        #return subprocess.check_output(cmd.format(action, filename),
+                        #               shell=True, stderr=subprocess.STDOUT)
