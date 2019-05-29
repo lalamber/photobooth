@@ -6,6 +6,13 @@ A flexible Photobooth software.
 
 It supports many different camera models, the appearance can be adapted to your likings, and it runs on many different hardware setups.
 
+## Modification in this fork
+
+To support Panasonic Lumix WiFi carma e.g. Panasonic Lumix G80 you need an WiFi SD Card (e.g Toshiba FlashAir with WebDAV)
+* Added Panasonic Lumix WLAN controlled camera G80(Panasonic Image App) (no gphoto2 support)
+* Picture transport through WLAN from WiFi SD Card
+
+
 ## Description
 This is a Python application to build your own photobooth.
 
